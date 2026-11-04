@@ -106,6 +106,31 @@ Narration uses Kokoro through Hyperframes when enabled.
 
 You get a `cutroom-output/` folder with the plan, a composition brief, share copy, and the rendered `cutroom.mp4`.
 
+## Styles
+
+A style is a complete look for a video: colors, fonts, layout, texture, how product footage is framed, the signature animations and the kind of music. Each style is one Markdown file in `skills/cutroom/references/styles/`. `/cutroom-slim` uses the same files.
+
+Every video, whatever its style, also follows the shared editing rules in [`references/editing-rules.md`](skills/cutroom/references/editing-rules.md). These cover composition and minimum sizes, the first two seconds, motion, pacing, voiceover, sound and loops. Every scene plan ends with the rules' review checklist, with each item confirmed.
+
+```text
+/cutroom --style slap-wrapped    # use a specific style
+/cutroom --style list            # list the available styles
+/cutroom                         # no flag: cutroom picks the best fit and says why in the plan
+```
+
+If no style fits the project, cutroom designs its own look and still follows the editing rules.
+
+**Current styles**
+
+| Style | What it looks like |
+|---|---|
+| `slap-wrapped` | A deadpan, premium data report: annual-report polish applied to any number or ranking, serious or ridiculous. |
+| `breaking-news` | A frantic local news broadcast played completely straight, with LIVE badges, lower-third name plates and a ticker. |
+| `grid-brutalist` | A clean neo-brutalist explainer: grid paper, heavy black type, highlight boxes and chunky cards with hard shadows. |
+| `drama-serial` | Prestige TV in a vertical frame: letterboxed black, antique gold serif titles, film grain and slow push-ins. |
+
+**Add your own:** copy [`styles/_template.md`](skills/cutroom/references/styles/_template.md) to `styles/<your-style>.md` and fill in every section. Write "Use it for" and "Avoid it for" carefully, because cutroom reads them to pick a style automatically. The first sentence under the title becomes the style's one-line description in `--style list`. A style can relax the default pacing in a "Pacing note" section, but never the first-two-seconds rules or the minimum sizes. Then run `/cutroom --style <your-style>`.
+
 ## How it works
 
 `/cutroom` owns the story — the product angle, tone, and which moments to show. It hands a focused brief to [Hyperframes](https://hyperframes.heygen.com/), which builds, times, and renders the video.

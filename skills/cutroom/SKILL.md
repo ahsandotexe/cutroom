@@ -11,6 +11,8 @@ You built it. Now let's cutroom about it.
 
 **Model check.** If you are Claude Opus 5.5 and the invocation doesn't ask for the full workflow (`--full`, "use the full cutroom") or for voiceover (`--voice`, which cutroom-slim doesn't do), switch to cutroom-slim: read `<skill-dir>/slim.md` (the /cutroom-slim skill, bundled here) and follow it for the rest of this run instead of this file. Pass along the user's input, and pass any other options (`--no-music`, `--title`, …) as plain-language direction. Tell the user in one line first, e.g. "You're on Opus 5.5, so I'm using /cutroom-slim: I build the whole video myself. Say 'use the full cutroom' to switch back." If you are any other model, or can't tell which model you are, skip this check.
 
+If the invocation is `--style list`, print the style list (see "Styles" below) and stop. Don't inspect the project or start a run.
+
 Before inspecting the project, parse the complete `/cutroom` invocation. If the
 invocation contains `--voice`, set `voice.enabled = true`. Enable narration
 only for that run. Do not enable narration automatically and do not fall back
@@ -34,6 +36,8 @@ The user may invoke with natural language or flags:
 /cutroom
 /cutroom --tone chaotic
 /cutroom --tone polished --format vertical
+/cutroom --style slap-wrapped
+/cutroom --style list
 /cutroom this. Make it feel like a ridiculous startup launch.
 ```
 
@@ -42,12 +46,13 @@ Parse these options:
 | Option | Values | Default |
 |---|---|---|
 | `--tone` | preset or freeform description | inferred |
-| `--format` | `landscape`, `vertical`, `square` | `landscape` |
+| `--format` | `landscape`, `vertical`, `square` | `vertical` (1080x1920, per `references/editing-rules.md`) |
 | `--duration` | seconds | auto (15-25s) |
 | `--no-music` | flag | music on |
 | `--no-sfx` | flag | sfx on |
 | `--title` | string | inferred from project |
 | `--voice` | flag | narration off |
+| `--style` | style name, or `list` | picked to fit (see "Styles") |
 
 Voice is opt-in. If `--voice` is present, use Kokoro via Hyperframes and do
 not add any provider-selection logic. The voice workflow is intentionally
@@ -56,6 +61,16 @@ single-provider.
 Tone can be a preset (`default`, `polished`, `yc-parody`, `chaotic`, `deadpan`, `cinematic`, `app-store`) or a creative direction such as "fake Series A launch from 2016", "museum exhibit", or "overproduced mobile game ad".
 
 When the user gives freeform tone direction, map it to the nearest preset for pacing and structure, but preserve the user's direction in the plan and composition brief.
+
+## Styles
+
+A style sets how the whole video looks: colors, type, layout, texture, footage framing and signature moves. Each style is one file in `<skill-dir>/references/styles/`. `_template.md` is the blank template for new styles, never a style itself.
+
+- `--style list`: for every style file except `_template.md`, print its name (the file name without `.md`) and a one-line description (the first sentence under its `# Style:` heading). Then stop.
+- `--style <name>`: read `references/styles/<name>.md` and apply it to the whole video. If there's no such file, say so and print the list.
+- No `--style`: read the "Use it for" and "Avoid it for" sections of every style file and pick the best fit. If none fits, design a look of your own; it still follows `references/editing-rules.md`.
+
+Either way, the plan names the style used and says why in one or two sentences.
 
 ## Narration guidance
 
@@ -99,13 +114,19 @@ Scan the project directory and extract the information needed to plan the cutroo
 
 ## Step 2: Plan and storyboard
 
+**Read first, every run:** [references/editing-rules.md](references/editing-rules.md). These rules apply to every video, whatever the style. Read them before writing any scene plan.
+**Read:** the chosen style file in `references/styles/` (see "Styles")
 **Read:** [references/step-2-plan.md](references/step-2-plan.md)
 
 Write `<output-dir>/cutroom-plan.md` (where `<output-dir>` is `cutroom-output/` or the timestamped variant chosen above). Answer the planning rubric. Commit to a creative angle. Write the beat-by-beat storyboard including scenes, text, timing, transitions, and SFX cues.
 
 When music is selected, include a compact `Music cue guidance` section: read the bundled track's cue preset from `<skill-dir>/assets/music/cues/` if present, otherwise note cues will be detected at composition time (any track now supports beat sync — see `references/audio.md`). Cue metadata is optional timing guidance only: story, readability, pacing, and product clarity stay primary.
 
-**Gate:** `<output-dir>/cutroom-plan.md` exists with a full storyboard. Scene durations sum to 15–25 seconds.
+The plan also states the chosen style and why, and ends with the review checklist from `references/editing-rules.md` (section 10), every item confirmed.
+
+Then stop and show the user the plan. Don't start Step 3 until they approve it or ask for changes; apply any changes to the plan first.
+
+**Gate:** `<output-dir>/cutroom-plan.md` exists with a full storyboard, the style choice, and the confirmed review checklist. Scene durations sum to 15–25 seconds. The user has approved the plan.
 
 ---
 

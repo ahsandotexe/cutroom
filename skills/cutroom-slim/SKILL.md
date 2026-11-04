@@ -14,8 +14,11 @@ Usage: `/cutroom-slim [input] [options]`. Options (flags or plain language):
 | Option | Default |
 |---|---|
 | `--tone <preset or freeform>` | inferred; `default` if nothing clearly fits |
-| `--format landscape\|vertical\|square` | landscape (1920×1080; vertical 1080×1920, square 1080×1080), 30fps |
+| `--format landscape\|vertical\|square` | vertical (1080×1920; landscape 1920×1080, square 1080×1080), 30fps |
 | `--duration <s>` | about 20s |
+| `--style <name>\|list` | picked to fit (see "Styles") |
+
+If the invocation is `--style list`, print the style list (see "Styles") and stop.
 
 Write the deliverables to `cutroom-output/` in the current directory (timestamped `cutroom-output-YYYY-MM-DD-HHmmss/` if it already exists). Keep every intermediate file (frames, downloads, scripts, stems) in a `work/` subfolder inside it.
 
@@ -56,11 +59,23 @@ Everything gathered here can end up in a public video. Never carry secrets, API 
 
 ## 2. Plan
 
+**Always read `references/editing-rules.md` first**, before writing any scene plan, for every video. `references/` sits next to this file and is shared with /cutroom. If it isn't there, use the `references/` folder of the installed `cutroom` skill.
+
 Write `cutroom-plan.md`: the angle, the hook, 2–3 highlights, the punchline, tone, visual identity, and a scene-by-scene storyboard with durations that sum to the target, with the music's tempo chosen now and every cut on a beat.
 
 If the user points at one part — a new version, a new feature, one angle — make this the focus of the video.
 
 **Shape:** Hook (2–3s) → Reveal (2–4s) → 2–3 sharp highlights → Punchline/outro (2–4s). A starting shape, not a template.
+
+The plan also names the style used and why, and ends with the review checklist from `references/editing-rules.md` (section 10), every item confirmed. Then stop and show the user the plan. Don't build anything until they approve it or ask for changes.
+
+## Styles
+
+A style sets how the whole video looks. Each style is one file in `references/styles/`. `_template.md` is the blank template for new styles, never a style itself.
+
+- `--style list`: for every style file except `_template.md`, print its name (the file name without `.md`) and a one-line description (the first sentence under its `# Style:` heading). Then stop.
+- `--style <name>`: read `references/styles/<name>.md` and apply it to the whole video. If there's no such file, say so and print the list.
+- No `--style`: read the "Use it for" and "Avoid it for" sections of every style file and pick the best fit. If none fits, design a look of your own; it still follows `references/editing-rules.md`.
 
 ## Creative laws
 
