@@ -1,28 +1,27 @@
 {
-  "name": "brag",
+  "name": "cutroom",
   "version": "0.5.0",
   "description": "Turn the current project into a short, polished, shareable launch video using Hyperframes.",
   "author": {
-    "name": "Shunit Haviv Hakimi",
-    "email": "shunithaviv@gmail.com",
-    "url": "https://github.com/shunithaviv"
+    "name": "Ahsan Iftikhar",
+    "url": "https://github.com/ahsandotexe"
   },
-  "homepage": "https://latent-spaces.github.io/brag/",
-  "repository": "https://github.com/latent-spaces/brag",
+  "homepage": "https://github.com/ahsandotexe/cutroom",
+  "repository": "https://github.com/ahsandotexe/cutroom",
   "license": "MIT",
   "keywords": ["video", "launch", "hyperframes", "skill"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "brag",
+    "displayName": "cutroom",
     "shortDescription": "Turn your project into a polished launch video.",
     "longDescription": "Create a short, shareable launch video from the current project, complete with a tailored story, motion, music, sound effects, poster frame, and share copy.",
-    "developerName": "Latent Spaces",
+    "developerName": "Ahsan Iftikhar",
     "category": "Productivity",
     "capabilities": ["Read", "Write", "Execute"],
-    "websiteURL": "https://latent-spaces.github.io/brag/",
+    "websiteURL": "https://github.com/ahsandotexe/cutroom",
     "defaultPrompt": [
       "Turn this project into a launch video.",
-      "Let's brag about what I built.",
+      "Let's cutroom about what I built.",
       "Make a polished launch video for this project."
     ]
   }
